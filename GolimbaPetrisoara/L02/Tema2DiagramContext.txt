@@ -1,0 +1,14 @@
+Post a question, read and rate the question and answer at the questions
+Business events:
+-	login with dev. Account (user1)
+-	write a question(user1)
+-	post a question(user1)
+-	answer to user question(user2,…,n)
+-	rate this questions(user2,…,n)
+-	all users can view the answer and comment to user(users)
+-	read the answer(all users)
+
+Context map
+-	Post question context
+-	Answer and rate the question context
+-	Read the answer of question context
