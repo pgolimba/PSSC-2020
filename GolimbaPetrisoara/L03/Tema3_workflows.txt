@@ -1,0 +1,41 @@
+Bounded context: "Question context"
+
+Workflow:"Post the question"
+		- Triggered by: "Post the question"
+		- Input: "User qustion"(Question, programming language category)
+		- Output: "wait to question validated" event
+		- Side effects: Text analyzed.
+		- Output2: "The result of analyzed"(accept, reject, manual review)
+		- Side effects: accept or reject the question
+
+workflow documentation
+
+workflow:"Post the question"
+	-input: "Question text and detail of this"
+	-output: "You will recive a message with question status"(accept, reject, manual review)
+
+ //step1
+	Write question and send
+	
+//step2 
+	analyzing the question via ML
+	if question is reject
+	stop
+ //step3 
+	if question is accepted
+	Publish the new question
+ //step4 
+	if qestion need manual review
+	do manual review then publish it
+
+workflows documnetation
+*substep "Analyzing the question"
+	-input: "Unalayzed question"
+	-output: "Analayzed question"
+	-dependencies: ML, manual review
+*Analyze the question
+*If Analyze passed then
+	- Publish the question
+*Elseif ML return manual review
+	-review the question and send this
+*Else return reject message
