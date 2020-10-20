@@ -23,21 +23,21 @@ namespace Profile.Domain.CreateProfileWorkflow
             }
         }
 
-        public class ProfileNotCreated: ICreateProfileResult
+        public class QuestionNotPosted: ICreateProfileResult
         {
             public string Reason { get; set; }
 
-            public ProfileNotCreated(string reason)
+            public QuestionNotPosted(string reason)
             {
                 Reason = reason;
             }
         }
 
-        public class ProfileValidationFailed: ICreateProfileResult
+        public class QuestionValidationFailed: ICreateProfileResult
         {
             public IEnumerable<string> ValidationErrors { get; private set; }
 
-            public ProfileValidationFailed(IEnumerable<string> errors)
+            public QuestionValidationFailed(IEnumerable<string> errors)
             {
                 ValidationErrors = errors.AsEnumerable();
             }

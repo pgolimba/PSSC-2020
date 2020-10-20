@@ -1,8 +1,8 @@
-﻿using Profile.Domain.CreateProfileWorkflow;
+﻿using Question.Domain.CreateQuestionWorkflow;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using static Profile.Domain.CreateProfileWorkflow.PostQuestionResult;
+using static Question.Domain.CreateQuestionWorkflow.PostQuestionResult;
 
 namespace Test.App
 {
