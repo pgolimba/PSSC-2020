@@ -39,7 +39,7 @@ namespace Primitives.IO
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Tracking.TrackException(ex);
                 throw;

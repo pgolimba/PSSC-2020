@@ -1,8 +1,12 @@
-﻿using Profile.Domain.CreateQuestionWorkflow;
+﻿using LanguageExt;
+using LanguageExt.Common;
+using Question.Domain.CreateQuestionWorkflow;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Net;
-using static Profile.Domain.CreateQuestionWorkflow.CreateQuestionResult;
+using static Question.Domain.CreateQuestionWorkflow.PostQuestionResult;
+using static Question.Domain.CreateQuestionWorkflow.Question;
 
 namespace Test.App
 {
@@ -10,58 +14,27 @@ namespace Test.App
     {
         static void Main(string[] args)
         {
-            var cmd = new CreateQuestionCmd("Ion", string.Empty, "Ionescu", "ion.inonescu@company.com");
-            var result = CreateQuestion(cmd);
+            string[] tags = {"C#"};
+            var question = UnverifiedQuestion.Create("Problem with homework ", "The type or namespace 'Result<>' could not be found",tags);
+           // var textResult = UnverifiedText.Create("La crearea unei clase in C# tot apare aceeasi eroare.");
 
-            result.Match(
-                    ProcessQuestionCreated,
-                    ProcessQuestionNotCreated,
-                    ProcessInvalidQuestion
+            question.Match(
+                    Succ: question =>
+                    { 
+                        Console.WriteLine("Question is valid.");
+                        return Unit.Default;
+                    },
+                    Fail: ex =>
+                    {
+                        Console.WriteLine($"Invalid question. Reason: {ex.Message}");
+                        return Unit.Default;
+                    }
                 );
+
 
             Console.ReadLine();
         }
 
-        private static ICreateQuestionResult ProcessInvalidQuestion(QuestionValidationFailed validationErrors)
-        {
-            Console.WriteLine("Question validation failed: ");
-            foreach (var error in validationErrors.ValidationErrors)
-            {
-                Console.WriteLine(error);
-            }
-            return validationErrors;
-        }
-
-        private static ICreateQuestionResult ProcessQuestionNotCreated(QuestionNotCreated QuestionNotCreatedResult)
-        {
-            Console.WriteLine($"Question not created: {questionNotCreatedResult.Reason}");
-            return questionNotCreatedResult;
-        }
-
-        private static ICreateQuestionResult ProcessQuestionCreated(QuestionCreated question)
-        {
-            Console.WriteLine($"Question {question.QuestionId}");
-            return question;
-        }
-
-        public static ICreateQuestionResult CreateQuestion(CreateQuestionCmd createQuestionCommand)
-        {
-            if (string.IsNullOrWhiteSpace(createQuestionCommand.EmailAddress))
-            {
-                var errors = new List<string>() { "Invlaid email address" };
-                return new QuestionValidationFailed(errors);
-            }
-
-            if(new Random().Next(10) > 1)
-            {
-                return new QuestionNotCreated("Email could not be verified");
-            }
-
-            var questionId = Guid.NewGuid();
-            var result = new QuestionCreated(questionId, createQuestionCommand.EmailAddress);
-
-            //execute logic
-            return result;
-        }
+ 
     }
 }
